@@ -1,28 +1,74 @@
 "use client";
 import Image from "next/image";
-import { Logo } from "@/components/Logo";
-import { Input } from "../components/Input";
-import { Continue } from "@/components/Continue";
-import { useState } from "react";
-export default function Home() {
-  const [inputv, setInputv] = useState();
-  const inputHandler = (e) => {
-    setInputv(e.target.value);
-  };
 
+import { useState } from "react";
+import { FirstStep } from "@/components/FirstStep";
+import { SecondStep } from "../components/SecondStep";
+import { ThridStep } from "@/components/ThirdStep";
+export default function Home() {
+  const [currentStep, setCurrentStep] = useState(0);
+  const Allsteps = [FirstStep, SecondStep, ThridStep][currentStep];
+  const [formValue, setFormValue] = useState({
+    FirstName: "",
+    LastName: "",
+    UserName: "",
+    Email: "",
+    phone: "",
+    password: "",
+    confpassword: "",
+  });
+  const [formError, setFormError] = useState({
+    FirstName: "",
+    LastName: "",
+    UserName: "",
+    Email: "",
+    phone: "",
+    password: "",
+    confpassword: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setFormError((prev) => ({ ...prev, [name]: "" }));
+    setFormValue((prev) => ({ ...prev, [name]: value }));
+  };
+  const clickHandler = () => {
+    let errorHave = false;
+    const { FirstName, LastName, UserName } = formValue;
+    if (!FirstName.trim()) {
+      setFormError((prev) => ({
+        ...prev,
+        FirstName: "Please enter your first name",
+      }));
+      errorHave = true;
+    }
+    if (!LastName.trim()) {
+      setFormError((prev) => ({
+        ...prev,
+        LastName: "Please enter your last name",
+      }));
+      errorHave = true;
+    }
+    if (!UserName.trim()) {
+      setFormError((prev) => ({
+        ...prev,
+        UserName: "Please enter your user name",
+      }));
+      errorHave = true;
+    }
+    if (!errorHave) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
   return (
-    <div className="flex w-[480px] h-[655px] p-[32px] flex-col justify-between items-start bg-[#FFF] rounded-[8px]">
-      <div className="flex flex-col items-start gap-[12px]">
-        <Logo />
-        <Input
-          label={"First Name"}
-          placeholder={"Your First Name"}
-          inputHandler={inputHandler}
-        />
-        <Input label={"Last Name"} placeholder={"Your Last Name"} />
-        <Input label={"User Name"} placeholder={"Your User Name"} />
-      </div>
-      <Continue />
+    <div>
+      <Allsteps
+        setCurrentStep={setCurrentStep}
+        currentStep={currentStep}
+        handleChange={handleChange}
+        clickHandler={clickHandler}
+        formError={formError}
+      />
     </div>
   );
 }
