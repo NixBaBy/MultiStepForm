@@ -1,7 +1,9 @@
 export const Continue = ({
   setCurrentStep,
   currentStep,
+  clickHandler2,
   clickHandler,
+  clickHandler3,
   formError,
 }) => {
   return (
@@ -28,7 +30,7 @@ export const Continue = ({
           </button>
           <button
             className="w-[256px] py-[10px] px-[12px] rounded-[6px] border-[1px] border-[#CBD5E1] border-solid bg-[#121316] text-white flex justify-center align-center gap-[4px]"
-            onClick={clickHandler}
+            onClick={clickHandler2}
           >
             continue 2/3
             <img src="./arrow.svg" alt="" />
@@ -45,7 +47,10 @@ export const Continue = ({
           >
             Back
           </button>
-          <button className="w-[256px] py-[10px] px-[12px] rounded-[6px] border-[1px] border-[#CBD5E1] border-solid bg-[#121316] text-white flex justify-center align-center gap-[4px]">
+          <button
+            className="w-[256px] py-[10px] px-[12px] rounded-[6px] border-[1px] border-[#CBD5E1] border-solid bg-[#121316] text-white flex justify-center align-center gap-[4px]"
+            onClick={clickHandler3}
+          >
             continue 3/3
             <img src="./arrow.svg" alt="" />
           </button>
